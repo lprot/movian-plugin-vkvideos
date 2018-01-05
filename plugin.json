@@ -1,0 +1,15 @@
+{
+	"id": "vkvideos",
+	"version": "0.3.5",
+	"type": "ecmascript",
+	"author": "Buksa, lprot",
+	"showtimeVersion": "4.8",
+	"title": "VK Videos",
+	"synopsis": "Searches videos in VK service",
+	"description":"<p>This plugin allows searches in VK Videos</p>",
+	"homepage":"https://github.com/lprot/movian-plugin-vkvideos",
+	"category": "video",
+	"icon": "logo.png",
+	"file": "vkvideos.js",
+        "apiversion": 1
+}
