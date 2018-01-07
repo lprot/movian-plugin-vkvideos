@@ -1,6 +1,6 @@
 {
 	"id": "vkvideos",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"type": "ecmascript",
 	"author": "Buksa, lprot",
 	"showtimeVersion": "4.8",
@@ -11,5 +11,5 @@
 	"category": "video",
 	"icon": "logo.png",
 	"file": "vkvideos.js",
-        "apiversion": 1
+        "apiversion": 2
 }
