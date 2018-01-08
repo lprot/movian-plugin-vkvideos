@@ -62,10 +62,8 @@ settings.createBool("Safe_Search", "Adult Search", 0, function(v) {
 });
 
 new page.Route(plugin.id + ":moreFromTheOwner:(.*)", function(page, id) {
-    page.contents = "items";
-    page.type = "directory";
-    page.metadata.logo = logo;
-    page.entries = 0;
+    setPageHeader(page, 'Videos of the user with ID: ' + id);
+
     function loader() {
         page.loading = true;
         var json = JSON.parse(http.request(API + '/video.get', {
@@ -78,6 +76,7 @@ new page.Route(plugin.id + ":moreFromTheOwner:(.*)", function(page, id) {
                 v: APIver
             }
         }));
+
         page.loading = false;
         for (var i in json.response.items) {
             var item = page.appendItem(plugin.id + ":play:" + escape(json.response.items[i].player) + ':' + encodeURIComponent(json.response.items[i].title), "video", {
@@ -91,7 +90,8 @@ new page.Route(plugin.id + ":moreFromTheOwner:(.*)", function(page, id) {
             });
             page.entries++;
         }
-        return json.response;
+        if (page.entries == json.response.count) return false;
+        return true;
     };
     loader();
     page.paginator = loader;
@@ -209,6 +209,13 @@ new page.Route(plugin.id + ":play:(.*):(.*)", function(page, url, title) {
     }
 });
 
+function addOptionMoreFromTheOwner(page, item) {
+    item.addOptAction("More from this user", function() {
+        console.log(plugin.id + ":moreFromTheOwner:" + item.owner_id);
+        page.redirect(plugin.id + ":moreFromTheOwner:" + item.owner_id);
+    });
+}
+
 function scraper(page, query) {
     setPageHeader(page, plugin.title + ' / ' + query);
 
@@ -238,10 +245,7 @@ function scraper(page, query) {
             });
 
             item.owner_id = json.response.items[i].owner_id;
-            item.onEvent("moreFromTheOwner", function(item) {
-                page.redirect(plugin.id + ":moreFromTheOwner:" + this.owner_id);
-	    }.bind(item));
-            item.addOptAction("More from this user", "moreFromTheOwner");
+            addOptionMoreFromTheOwner(page, item); 
             page.entries++;
         }
         return json.response.items.length;
