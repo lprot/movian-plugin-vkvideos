@@ -217,7 +217,7 @@ function addOptionMoreFromTheOwner(page, item) {
 }
 
 function scraper(page, query) {
-    setPageHeader(page, plugin.title + ' / ' + query);
+    setPageHeader(page, plugin.title);
 
     function loader() {
         page.loading = true;
